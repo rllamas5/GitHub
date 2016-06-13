@@ -1,0 +1,43 @@
+{
+   "Description": "Remove a number from the Sudoku data",
+   "Lines": [
+      "PARMS($RANK,$FILE,$SELECTED)",
+      "EXTERN($STORE())",
+      "DEFINE $STORE(9,27)",
+      "//This array represents the current state of the game in progress.",
+      "",
+      "// Identify the square in the array.",
+      "CASE $RANK",
+      "   WHEN 'A','B','C' : IF $FILE IN-ALPHA('123') THEN $BLOCK = 'a' ELSE",
+      "                         IF $FILE IN-ALPHA('456') THEN $BLOCK = 'b' ELSE",
+      "                            IF $FILE IN-ALPHA('789') THEN $BLOCK = 'c' ;;;",
+      "   WHEN 'D','E','F' : IF $FILE IN-ALPHA('123') THEN $BLOCK = 'd' ELSE",
+      "                         IF $FILE IN-ALPHA('456') THEN $BLOCK = 'e' ELSE",
+      "                            IF $FILE IN-ALPHA('789') THEN $BLOCK = 'f' ;;;",
+      "   WHEN 'G','H','I' : IF $FILE IN-ALPHA('123') THEN $BLOCK = 'g' ELSE",
+      "                         IF $FILE IN-ALPHA('456') THEN $BLOCK = 'h' ELSE",
+      "                            IF $FILE IN-ALPHA('789') THEN $BLOCK = 'i' ;;;",
+      "ENDCASE",
+      "",
+      "$VAL = $RANK + $FILE + $BLOCK",
+      "#SELECTED = CONV($SELECTED)",
+      "",
+      "// Remove the overwritten square from the array.",
+      "#START = INDEX($STORE(#SELECTED),$VAL) - 1",
+      "IF #START > 0 THEN",
+      "   $START = $STORE(#SELECTED)(1,#START)",
+      "ENDIF",
+      "",
+      "#LEN = LEN($STORE(#SELECTED))",
+      "$END = $STORE(#SELECTED)(#START + 4,#LEN)",
+      "",
+      "$STORE(#SELECTED) = $START + $END"
+   ],
+   "Meta": {
+      "Type": "p4gl",
+      "Version": "1"
+   },
+   "Name": "@DemoSudokuRemove",
+   "SecurityCategory": "",
+   "Type": "Procedural"
+}
